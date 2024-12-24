@@ -18,7 +18,7 @@ pub struct JeuDeviner {
 }
 
 impl JeuDeviner {
-    pub fn new(mut essais: i32, mut marge_max: i32, niveau: Difficulte) -> Self {
+    pub fn new(mut essais: i32, mut marge_max: i32, niveau: Difficulte) -> Result<Self, io::Error> {
         if let Difficulte::Facile = niveau {
             essais *= 2;
             marge_max /= 2;
@@ -27,11 +27,15 @@ impl JeuDeviner {
             marge_max *= 2;
         }
         let alea = Self::calcul_alea(marge_max);
-
-        Self {
-            essais,
-            nb_alea: alea,
-            reponses: Vec::new()
+        if essais <= 1 || marge_max <= 1{
+            Err(io::Error::new(io::ErrorKind::InvalidInput, "Ne pas mettre de valeurs négatives"))
+        }
+        else {
+            Ok(Self {
+                essais,
+                nb_alea: alea,
+                reponses: Vec::new()
+            })
         }
     }
 
