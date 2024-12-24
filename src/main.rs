@@ -1,8 +1,8 @@
-pub mod jeu;
+mod jeu;
+
+pub use crate::jeu::{JeuDeviner, Difficulte};
 fn main() {
-    let unjeu = jeu::JeuDeviner::
-        new(10, 100, jeu::Difficulte::Facile);
-    
+    let unjeu = JeuDeviner::new(10, 100, Difficulte::Facile);
     println!("struct : {:#?}", &unjeu);
     unjeu.jouer();
 }

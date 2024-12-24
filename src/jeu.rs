@@ -1,3 +1,4 @@
+
 use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
@@ -6,7 +7,7 @@ use std::io;
 pub enum Difficulte {
     Facile,
     Moyen,
-    Difficile
+    Difficile,
 }
 
 #[derive(Debug)]
@@ -41,7 +42,10 @@ impl JeuDeviner {
         let mut i = self.essais;
         'essais: loop {
             if i <= 0 {
-                println!("A court d'essais, perdu! Le nombre était : {}", self.nb_alea);
+                println!(
+                    "A court d'essais, perdu! Le nombre était : {}",
+                    self.nb_alea
+                );
                 break 'essais;
             }
             println!("essais restants : {}", i);
