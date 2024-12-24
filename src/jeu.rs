@@ -1,6 +1,14 @@
 use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
+
+#[derive(Debug)]
+pub enum Difficulte {
+    Facile,
+    Moyen,
+    Difficile
+}
+
 #[derive(Debug)]
 pub struct JeuDeviner {
     essais: i32,
@@ -8,8 +16,16 @@ pub struct JeuDeviner {
 }
 
 impl JeuDeviner {
-    pub fn new(essais: i32, marge_max: i32) -> Self {
+    pub fn new(mut essais: i32, mut marge_max: i32, niveau: Difficulte) -> Self {
+        if let Difficulte::Facile = niveau {
+            essais *= 2;
+            marge_max /= 2;
+        } else if let Difficulte::Difficile = niveau {
+            essais /= 2;
+            marge_max *= 2;
+        }
         let alea = Self::calcul_alea(marge_max);
+
         Self {
             essais,
             nb_alea: alea,
