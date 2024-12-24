@@ -14,6 +14,7 @@ pub enum Difficulte {
 pub struct JeuDeviner {
     essais: i32,
     nb_alea: i32,
+    reponses: Vec<i32>
 }
 
 impl JeuDeviner {
@@ -30,6 +31,7 @@ impl JeuDeviner {
         Self {
             essais,
             nb_alea: alea,
+            reponses: Vec::new()
         }
     }
 
@@ -37,7 +39,7 @@ impl JeuDeviner {
         rand::thread_rng().gen_range(1..=marge_max)
     }
 
-    pub fn jouer(&self) -> bool {
+    pub fn jouer(&mut self) -> bool {
         let mut gagner = false;
         let mut i = self.essais;
         'essais: loop {
@@ -73,8 +75,16 @@ impl JeuDeviner {
                 Ordering::Greater => println!("c moins "),
                 Ordering::Less => println!("c plus"),
             }
+            self.reponses.push(entre_utilisateur);
             i -= 1;
         }
         gagner
+    }
+
+    pub fn show_answer(&self) {
+        println!("Voici les différents input :");
+        for (i,ans) in self.reponses.iter().enumerate() {
+            println!("{} : {}",i+1, ans);
+        }
     }
 }
